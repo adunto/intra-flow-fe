@@ -1,4 +1,4 @@
-import { refreshAccessToken } from "@/api/authService";
+import { refreshAccessToken } from "@/dal/auth";
 import { useAuthStore } from "@/stores/useAuthStore";
 import axios, {
   AxiosError,
@@ -20,29 +20,31 @@ client.interceptors.request.use((config) => {
   return config;
 });
 
-interface OriginalRequest extends InternalAxiosRequestConfig {
-  _retry?: boolean;
-}
+let retry = false;
 
 client.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
-    const originalRequest = error.config as OriginalRequest;
+    const originalRequest = error.config as InternalAxiosRequestConfig;
 
-    if (error.response?.status === 403 && !originalRequest._retry) {
-      originalRequest._retry = true;
+    if (error.response?.status === 403 && !retry) {
+      retry = true;
 
       try {
-        const newAccessToken = await refreshAccessToken();
+        const { accessToken } = await refreshAccessToken();
 
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+        useAuthStore.getState().setAccessToken(accessToken);
+
+        originalRequest.headers.Authorization = `Bearer ${accessToken}`;
 
         return client(originalRequest);
-      } catch (error) {
+      } catch (err) {
         useAuthStore.getState().setAccessToken(null);
-        return Promise.reject(error);
+        throw err;
       }
     }
+
+    throw error;
   },
 );
 

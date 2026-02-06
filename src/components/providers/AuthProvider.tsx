@@ -1,11 +1,11 @@
 "use client";
 
-import { refreshAccessToken } from "@/api/authService";
+import { refreshAccessToken } from "@/dal/auth";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useEffect } from "react";
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const { accessToken, setAccessToken, isInitialized, setInitialized } =
+  const { accessToken, setAccessToken } =
     useAuthStore();
 
   useEffect(() => {
@@ -16,21 +16,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         }
       } catch (error) {
         setAccessToken(null);
-      } finally {
-        setInitialized(true);
+        console.error("토큰 재발급 실패", error);
       }
     };
 
     initAuth();
   }, [setAccessToken]);
-
-  if (!isInitialized) {
-    return (
-      <div className="w-full min-h-screen flex justify-center items-center">
-        <span className="text-2xl font-bold">Loading...</span>
-      </div>
-    );
-  }
 
   return <>{children}</>;
 };
