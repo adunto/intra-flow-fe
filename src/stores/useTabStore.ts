@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type TabEnum = "BOARD" | "MESSENGER";
+export type TabEnum = "BOARD" | "MESSENGER";
 
 interface TabState {
   tab: TabEnum;

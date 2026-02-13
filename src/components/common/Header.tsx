@@ -4,11 +4,17 @@ import { LogOut, MessageCircleIcon, PresentationIcon } from "lucide-react";
 import Logo from "../feature/header/Logo";
 import { Button } from "../ui/button";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
-import { useTabStore } from "@/stores/useTabStore";
+import { TabEnum, useTabStore } from "@/stores/useTabStore";
+import { useTransition } from "react";
 
 const RootHeader = () => {
   // 탭 스토어
   const { tab, setTab } = useTabStore();
+  const [isPending, startTransition] = useTransition();
+
+  const handleTabClick = (tab: TabEnum) => {
+    startTransition(() => setTab(tab));
+  };
 
   return (
     <header className="w-full h-18 m-0 bg-white border-b shadow-sm fixed flex items-center flex-row justify-between px-10">
@@ -16,13 +22,16 @@ const RootHeader = () => {
       <Logo />
 
       {/* 네비게이터 Board & Messenger */}
-      <Tabs defaultValue="board">
+      <Tabs defaultValue="BOARD">
         <TabsList>
-          <TabsTrigger value="board">
+          <TabsTrigger value="BOARD" onClick={() => handleTabClick("BOARD")}>
             <PresentationIcon />
             게시판
           </TabsTrigger>
-          <TabsTrigger value="messenger">
+          <TabsTrigger
+            value="MESSENGER"
+            onClick={() => handleTabClick("MESSENGER")}
+          >
             <MessageCircleIcon />
             메신저
           </TabsTrigger>
