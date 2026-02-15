@@ -7,7 +7,7 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
-import { TypographyH1 } from "@/components/ui/typography";
+import { TypographyH1, TypographySmall } from "@/components/ui/typography";
 import { loginSchema } from "@/schemas/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, Lock, Mail } from "lucide-react";
@@ -98,6 +98,13 @@ const LoginForm = () => {
             "로그인"
           )}
         </Button>
+
+        <div className="my-4 justify-self-center">
+          <TypographySmall>계정이 없으신가요?</TypographySmall>
+          <Button variant="link" onClick={() => router.push("/signup")}>
+            회원가입
+          </Button>
+        </div>
       </form>
     </Card>
   );

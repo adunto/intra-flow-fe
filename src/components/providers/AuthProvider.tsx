@@ -5,18 +5,18 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import { useEffect } from "react";
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const { accessToken, setAccessToken } =
-    useAuthStore();
+  const { accessToken, setAccessToken } = useAuthStore();
 
   useEffect(() => {
     const initAuth = async () => {
       try {
         if (!accessToken) {
           await refreshAccessToken();
+        } else {
+          setAccessToken(accessToken);
         }
       } catch (error) {
         setAccessToken(null);
-        console.error("토큰 재발급 실패", error);
       }
     };
 

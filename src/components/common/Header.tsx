@@ -1,11 +1,11 @@
 "use client";
 
-import { LogOut, MessageCircleIcon, PresentationIcon } from "lucide-react";
+import { MessageCircleIcon, PresentationIcon } from "lucide-react";
 import Logo from "../feature/header/Logo";
-import { Button } from "../ui/button";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
 import { TabEnum, useTabStore } from "@/stores/useTabStore";
 import { useTransition } from "react";
+import UserInfoButton from "../feature/user/UserInfoButton";
 
 const RootHeader = () => {
   // 탭 스토어
@@ -17,7 +17,7 @@ const RootHeader = () => {
   };
 
   return (
-    <header className="w-full h-18 m-0 bg-white border-b shadow-sm fixed flex items-center flex-row justify-between px-10">
+    <header className="w-full h-18 m-0 bg-white border-b shadow-sm fixed flex items-center flex-row justify-around">
       {/* 로고 & IntraFlow */}
       <Logo />
 
@@ -38,14 +38,8 @@ const RootHeader = () => {
         </TabsList>
       </Tabs>
 
-      <div className="">
-        {/* 사용자 간편 정보 (버튼) 누르면 모달 띄워주기 */}
-
-        {/* 로그아웃 버튼 */}
-        <Button>
-          <LogOut />
-        </Button>
-      </div>
+      {/* 사용자 간편 정보 (버튼) 누르면 모달 띄워주기 */}
+      <UserInfoButton />
     </header>
   );
 };
