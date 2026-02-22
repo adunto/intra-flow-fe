@@ -1,5 +1,6 @@
 import { refreshAccessToken } from "@/dal/auth";
 import { useAuthStore } from "@/stores/useAuthStore";
+
 import axios, {
   AxiosError,
   AxiosRequestConfig,
@@ -33,6 +34,17 @@ client.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
     const originalRequest = error.config as RequestConfig;
+
+    // 1. 요청 정보가 없거나, 이미 재시도한 경우 패스
+    if (!originalRequest || originalRequest._retry) {
+      return Promise.reject(error);
+    }
+
+    // 2. [핵심] 401 에러가 난 요청이 '토큰 재발급 요청' 그 자체라면?
+    // 여기서 재시도를 하면 무한 루프에 빠지므로 즉시 실패 처리합니다.
+    if (originalRequest.url?.includes("/auth/refresh")) {
+      return Promise.reject(error);
+    }
 
     if (
       (error.response?.status === 401 || error.response?.status === 403) &&

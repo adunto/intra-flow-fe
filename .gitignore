@@ -46,3 +46,6 @@ storybook-static
 stories/
 .storybook
 vitest.*
+
+# Agent skills
+.agent/

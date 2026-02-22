@@ -9,7 +9,7 @@ const MainContainer = () => {
   const { tab } = useTabStore();
 
   return (
-    <div className="w-full h-screen">
+    <div className="h-auto pt-16 flex justify-center">
       <Activity mode={tab === "BOARD" ? "visible" : "hidden"}>
         <Board />
       </Activity>

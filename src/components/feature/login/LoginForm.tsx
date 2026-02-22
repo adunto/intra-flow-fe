@@ -101,7 +101,11 @@ const LoginForm = () => {
 
         <div className="my-4 justify-self-center">
           <TypographySmall>계정이 없으신가요?</TypographySmall>
-          <Button variant="link" onClick={() => router.push("/signup")}>
+          <Button
+            type="button"
+            variant="link"
+            onClick={() => router.push("/signup")}
+          >
             회원가입
           </Button>
         </div>

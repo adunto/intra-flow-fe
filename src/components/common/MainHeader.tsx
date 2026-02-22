@@ -9,7 +9,7 @@ import UserInfoButton from "../feature/user/UserInfoButton";
 
 const RootHeader = () => {
   // 탭 스토어
-  const { tab, setTab } = useTabStore();
+  const { setTab } = useTabStore();
   const [isPending, startTransition] = useTransition();
 
   const handleTabClick = (tab: TabEnum) => {
@@ -17,7 +17,7 @@ const RootHeader = () => {
   };
 
   return (
-    <header className="w-full h-18 m-0 bg-white border-b shadow-sm fixed flex items-center flex-row justify-around">
+    <header className="fixed top-0 left-0 right-0 z-50 h-16 w-full m-0 bg-white border-b shadow-sm flex items-center flex-row justify-around">
       {/* 로고 & IntraFlow */}
       <Logo />
 
@@ -38,7 +38,7 @@ const RootHeader = () => {
         </TabsList>
       </Tabs>
 
-      {/* 사용자 간편 정보 (버튼) 누르면 모달 띄워주기 */}
+      {/* TODO: 사용자 간편 정보 (버튼) 누르면 모달 띄워주기 */}
       <UserInfoButton />
     </header>
   );

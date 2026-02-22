@@ -24,3 +24,5 @@ export interface User {
   updatedAt: Date;
   deletedAt?: Date | null;
 }
+
+export type UserSummary = Pick<User, "id" | "email" | "username">;

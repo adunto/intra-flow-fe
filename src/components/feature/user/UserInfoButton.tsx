@@ -1,33 +1,40 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
-import { getUserInfo } from "@/dal/user";
 import { Loader2, LogOutIcon, UserIcon } from "lucide-react";
 import Image from "next/image";
-import { User } from "@/types/user";
 import { useAuthStore } from "@/stores/useAuthStore";
 import { useRouter } from "next/navigation";
 import { logout } from "@/dal/auth";
 import { useTransition } from "react";
+import { getUserInfo } from "@/dal/user";
+import { useQuery } from "@tanstack/react-query";
+import { User } from "@/types/user";
 
 const UserInfoButton = () => {
-  const { accessToken } = useAuthStore();
+  const { accessToken, setAccessToken, isAuthInitialized } = useAuthStore();
   const [isPending, startTransition] = useTransition();
-  const { setAccessToken } = useAuthStore();
+  const router = useRouter();
 
-  const { data: user, isLoading } = useQuery<User>({
+  const { data: user } = useQuery<User>({
     queryKey: ["currentUser"],
     queryFn: getUserInfo,
-    enabled: !!accessToken,
+    enabled: !!accessToken, // 토큰이 있을 때만 쿼리 실행
     staleTime: 1000 * 60 * 15,
     gcTime: 1000 * 60 * 30,
     retry: false,
   });
 
-  const router = useRouter();
+  if (!isAuthInitialized) {
+    return (
+      <Button variant="ghost" disabled className="w-32 justify-start gap-2">
+        <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+        <span className="h-4 w-20 animate-pulse rounded bg-gray-200" />
+      </Button>
+    );
+  }
 
-  if (isLoading || isPending) {
+  if (isPending) {
     return (
       <Button variant="ghost" disabled className="w-32 justify-start gap-2">
         <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
