@@ -1,11 +1,10 @@
+import axios, {
+  type AxiosError,
+  type AxiosRequestConfig,
+  type InternalAxiosRequestConfig,
+} from "axios";
 import { refreshAccessToken } from "@/dal/auth";
 import { useAuthStore } from "@/stores/useAuthStore";
-
-import axios, {
-  AxiosError,
-  AxiosRequestConfig,
-  InternalAxiosRequestConfig,
-} from "axios";
 
 const client = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -35,13 +34,13 @@ client.interceptors.response.use(
   async (error: AxiosError) => {
     const originalRequest = error.config as RequestConfig;
 
-    // 1. 요청 정보가 없거나, 이미 재시도한 경우 패스
+    // 요청 정보가 없거나, 이미 재시도한 경우 패스
     if (!originalRequest || originalRequest._retry) {
       return Promise.reject(error);
     }
 
-    // 2. [핵심] 401 에러가 난 요청이 '토큰 재발급 요청' 그 자체라면?
-    // 여기서 재시도를 하면 무한 루프에 빠지므로 즉시 실패 처리합니다.
+    // 401 에러 -> 토큰 재발급 요청
+    // 무한 루프 방지
     if (originalRequest.url?.includes("/auth/refresh")) {
       return Promise.reject(error);
     }

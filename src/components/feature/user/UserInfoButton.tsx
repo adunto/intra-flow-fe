@@ -1,15 +1,15 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { useQuery } from "@tanstack/react-query";
 import { Loader2, LogOutIcon, UserIcon } from "lucide-react";
 import Image from "next/image";
-import { useAuthStore } from "@/stores/useAuthStore";
 import { useRouter } from "next/navigation";
-import { logout } from "@/dal/auth";
 import { useTransition } from "react";
+import { Button } from "@/components/ui/button";
+import { logout } from "@/dal/auth";
 import { getUserInfo } from "@/dal/user";
-import { useQuery } from "@tanstack/react-query";
-import { User } from "@/types/user";
+import { useAuthStore } from "@/stores/useAuthStore";
+import type { User } from "@/types/user";
 
 const UserInfoButton = () => {
   const { accessToken, setAccessToken, isAuthInitialized } = useAuthStore();
@@ -20,8 +20,8 @@ const UserInfoButton = () => {
     queryKey: ["currentUser"],
     queryFn: getUserInfo,
     enabled: !!accessToken, // 토큰이 있을 때만 쿼리 실행
-    staleTime: 1000 * 60 * 15,
-    gcTime: 1000 * 60 * 30,
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 5,
     retry: false,
   });
 

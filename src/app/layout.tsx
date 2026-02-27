@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Suspense } from "react";
+import RootHeader from "@/components/common/MainHeader";
 import { AuthProvider } from "@/components/providers/AuthProvider";
 import QueryProvider from "@/components/providers/QueryProvider";
-import RootHeader from "@/components/common/MainHeader";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,7 +33,13 @@ export default function RootLayout({
       >
         <QueryProvider>
           <AuthProvider>
-            <RootHeader />
+            <Suspense
+              fallback={
+                <div className="h-16 w-full bg-white border-b shadow-sm" />
+              }
+            >
+              <RootHeader />
+            </Suspense>
             {children}
           </AuthProvider>
         </QueryProvider>

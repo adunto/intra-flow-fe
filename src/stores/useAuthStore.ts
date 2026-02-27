@@ -1,5 +1,5 @@
-import { User } from "@/types/user";
 import { create } from "zustand";
+import type { User } from "@/types/user";
 
 interface AuthStore {
   accessToken: string | null;

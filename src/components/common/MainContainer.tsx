@@ -1,7 +1,7 @@
 "use client";
 
-import { useTabStore } from "@/stores/useTabStore";
 import { Activity } from "react";
+import { useTabStore } from "@/stores/useTabStore";
 import Board from "../feature/board/Board";
 import Messenger from "../feature/messenger/Messenger";
 

@@ -20,7 +20,7 @@ export interface Post {
   comments: Comment[];
 }
 
-export type PostSummary = Omit<Post, "comments">;
+export type PostSummary = Omit<Post, "comments" | "content">;
 
 export interface PostListResponse {
   data: PostSummary[];

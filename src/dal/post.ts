@@ -1,4 +1,5 @@
-import type { PostListResponse, SearchType } from "@/types/post";
+import { cache } from "react";
+import type { Post, PostListResponse, SearchType } from "@/types/post";
 import { apiProxy } from "./proxy";
 
 export const fetchPosts = async (
@@ -31,3 +32,16 @@ export const fetchPosts = async (
 
   return response;
 };
+
+export const fetchPostDetail = cache(async (postId: string) => {
+  try {
+    const response = await apiProxy<Post>({
+      url: `/posts/${postId}`,
+      method: "GET",
+    });
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+});
