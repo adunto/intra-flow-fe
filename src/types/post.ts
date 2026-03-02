@@ -33,3 +33,5 @@ export interface PostListResponse {
 }
 
 export type CreatePostDto = Pick<Post, "title" | "content">;
+
+export type UpdatePostDto = Pick<Post, "title" | "content">;

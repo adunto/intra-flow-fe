@@ -4,6 +4,7 @@ import type {
   Post,
   PostListResponse,
   SearchType,
+  UpdatePostDto,
 } from "@/types/post";
 import { apiProxy } from "./proxy";
 
@@ -55,6 +56,27 @@ export const createPost = async (createPostDto: CreatePostDto) => {
     url: "/posts",
     method: "POST",
     data: createPostDto,
+  });
+
+  return response;
+};
+
+// 게시물 수정
+export const updatePost = async (postId: string, updatePostDto: UpdatePostDto) => {
+  const response = await apiProxy<Post>({
+    url: `/posts/${postId}`,
+    method: "PUT",
+    data: updatePostDto,
+  });
+
+  return response;
+};
+
+// 게시물 삭제
+export const deletePost = async (postId: string) => {
+  const response = await apiProxy({
+    url: `/posts/${postId}`,
+    method: "DELETE",
   });
 
   return response;

@@ -27,3 +27,29 @@ export const createComment = async (
 
   return response;
 };
+
+// 댓글 수정
+export const updateComment = async (
+  commentId: string,
+  comment: string,
+) => {
+  const response = await apiProxy({
+    url: `/comments/${commentId}`,
+    method: "PUT",
+    data: {
+      content: comment,
+    },
+  });
+
+  return response;
+};
+
+// 댓글 삭제
+export const deleteComment = async (commentId: string) => {
+  const response = await apiProxy({
+    url: `/comments/${commentId}`,
+    method: "DELETE",
+  });
+
+  return response;
+};
