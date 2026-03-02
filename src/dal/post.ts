@@ -1,5 +1,10 @@
 import { cache } from "react";
-import type { Post, PostListResponse, SearchType } from "@/types/post";
+import type {
+  CreatePostDto,
+  Post,
+  PostListResponse,
+  SearchType,
+} from "@/types/post";
 import { apiProxy } from "./proxy";
 
 export const fetchPosts = async (
@@ -19,11 +24,12 @@ export const fetchPosts = async (
       },
     });
   } else {
+    console.log(searchType);
     response = await apiProxy<PostListResponse>({
       url: "/posts/search",
       method: "GET",
       params: {
-        searchType: searchType?.join(", "),
+        searchType: searchType?.join(","),
         searchItem: searchKeyword,
         page: page,
       },
@@ -33,15 +39,23 @@ export const fetchPosts = async (
   return response;
 };
 
+// 게시물 상세 조회
 export const fetchPostDetail = cache(async (postId: string) => {
-  try {
-    const response = await apiProxy<Post>({
-      url: `/posts/${postId}`,
-      method: "GET",
-    });
+  const response = await apiProxy<Post>({
+    url: `/posts/${postId}`,
+    method: "GET",
+  });
 
-    return response;
-  } catch (error) {
-    throw error;
-  }
+  return response;
 });
+
+// 게시물 작성
+export const createPost = async (createPostDto: CreatePostDto) => {
+  const response = await apiProxy<Post>({
+    url: "/posts",
+    method: "POST",
+    data: createPostDto,
+  });
+
+  return response;
+};

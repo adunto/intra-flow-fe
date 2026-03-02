@@ -1,15 +1,16 @@
-import { UserSummary } from "./user";
+import type { Comment } from "./comment";
+import type { UserSummary } from "./user";
 
 export enum SearchType {
-  AUTHOR = 'AUTHOR',
-  TITLE = 'TITLE',
-  CONTENT = 'CONTENT',
+  AUTHOR = "AUTHOR",
+  TITLE = "TITLE",
+  CONTENT = "CONTENT",
 }
 
 export interface Post {
   id: string;
   title: string;
-  content: string;
+  content: any;
   viewCount: number;
   likeCount: number;
   createdAt: Date;
@@ -28,5 +29,7 @@ export interface PostListResponse {
     total: number;
     page: number;
     lastPage: number;
-  }
+  };
 }
+
+export type CreatePostDto = Pick<Post, "title" | "content">;

@@ -45,6 +45,7 @@ next-env.d.ts
 storybook-static
 stories/
 .storybook
+*.stories.*
 vitest.*
 
 # Agent skills

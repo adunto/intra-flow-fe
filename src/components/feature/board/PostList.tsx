@@ -47,13 +47,13 @@ const PostList = () => {
 
       {posts?.data.length === 0 && !isLoading && (
         <div className="text-center py-20 text-muted-foreground border-2 border-dashed rounded-xl">
-          <p>검색 결과가 없습니다.</p>
+          <p>게시물이 없습니다.</p>
         </div>
       )}
 
       {posts && posts.data.length > 0 && (
         <div className="flex flex-col gap-4">
-          <div className="flex gap-6">
+          <div className="flex flex-col gap-2">
             {posts.data.map((post) => (
               <PostItem key={post.id} post={post} />
             ))}

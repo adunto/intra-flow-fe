@@ -35,7 +35,7 @@ const PostListPagination = ({ page, lastPage }: PostListPaginationProps) => {
   };
 
   return (
-    <Pagination>
+    <Pagination className="my-4">
       <PaginationContent>
         {page > 1 && (
           <PaginationItem className="cursor-pointer">

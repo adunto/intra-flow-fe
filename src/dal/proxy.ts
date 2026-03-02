@@ -72,12 +72,7 @@ client.interceptors.response.use(
 );
 
 export const apiProxy = async <T>(config: AxiosRequestConfig): Promise<T> => {
-  try {
-    const response = await client.request<T>(config);
+  const response = await client.request<T>(config);
 
-    return response.data;
-  } catch (error: any) {
-    // console.error("API Proxy Error: ", error.response?.data || error.message);
-    throw error;
-  }
+  return response.data;
 };

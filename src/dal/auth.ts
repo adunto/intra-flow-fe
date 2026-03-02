@@ -1,7 +1,6 @@
-import { User } from "@/types/user";
-import { apiProxy } from "./proxy";
 import { useAuthStore } from "@/stores/useAuthStore";
-import axios from "axios";
+import type { User } from "@/types/user";
+import { apiProxy } from "./proxy";
 
 // 회원가입
 export const signup = async (

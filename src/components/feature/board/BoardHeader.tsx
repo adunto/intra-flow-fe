@@ -1,10 +1,10 @@
 "use client";
 
 import { PencilLineIcon } from "lucide-react";
-import { TypographyH1 } from "@/components/ui/typography";
+import { useRouter } from "next/navigation";
+import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import {
   Combobox,
   ComboboxContent,
@@ -13,7 +13,8 @@ import {
   ComboboxList,
 } from "@/components/ui/combobox";
 import { Field } from "@/components/ui/field";
-import { useEffect, useRef } from "react";
+import { Input } from "@/components/ui/input";
+import { TypographyH1 } from "@/components/ui/typography";
 import { usePostStore } from "@/stores/usePostStore";
 import { SearchType } from "@/types/post";
 
@@ -32,6 +33,8 @@ const BoardHeader = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { setSearchType, setSearchKeyword } = usePostStore();
 
+  const router = useRouter();
+
   useEffect(() => {
     const initialTypes = SearchCategories.get(DEFAULT_CATEGORY);
     if (initialTypes) {
@@ -41,13 +44,18 @@ const BoardHeader = () => {
 
   const handleSearch = () => {
     setSearchKeyword(inputRef.current?.value || "");
-  }
+  };
+
+  // 글 쓰기 이동
+  const handleCreatePostClick = () => {
+    router.push("/post/create");
+  };
 
   return (
     <div className="w-full">
       <div className="flex justify-between px-4">
         <TypographyH1>게시글</TypographyH1>
-        <Button variant="default" size="lg">
+        <Button variant="default" size="lg" onClick={handleCreatePostClick}>
           <PencilLineIcon />글 쓰기
         </Button>
       </div>
@@ -57,7 +65,7 @@ const BoardHeader = () => {
         <div className="mx-4 flex gap-4 flex-col md:flex-row ">
           <Field orientation="horizontal">
             <Input
-            ref={inputRef}
+              ref={inputRef}
               onKeyDown={(e) => e.key === "Enter"}
               type="search"
               placeholder="검색어를 입력하세요."
