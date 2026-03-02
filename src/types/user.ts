@@ -1,7 +1,4 @@
-import { Post } from "./post";
-
 export type UserRole = "USER" | "ADMIN";
-
 
 //   // --- 작성한 게시물 ---
 //   @OneToMany(() => Post, (post) => post.user)
@@ -26,6 +23,6 @@ export interface User {
   createdAt: Date;
   updatedAt: Date;
   deletedAt?: Date | null;
-  posts: Post[];
-  
 }
+
+export type UserSummary = Pick<User, "id" | "email" | "username">;

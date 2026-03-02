@@ -1,10 +1,10 @@
+import axios, {
+  type AxiosError,
+  type AxiosRequestConfig,
+  type InternalAxiosRequestConfig,
+} from "axios";
 import { refreshAccessToken } from "@/dal/auth";
 import { useAuthStore } from "@/stores/useAuthStore";
-import axios, {
-  AxiosError,
-  AxiosRequestConfig,
-  InternalAxiosRequestConfig,
-} from "axios";
 
 const client = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -13,6 +13,11 @@ const client = axios.create({
 
 client.interceptors.request.use((config) => {
   const token = useAuthStore.getState().accessToken;
+
+  if (!config.headers) {
+    config.headers = {} as any;
+  }
+
   if (token) {
     // Request 에 토큰 넣기 ( 있는 경우에만 )
     config.headers.Authorization = `Bearer ${token}`;
@@ -20,15 +25,32 @@ client.interceptors.request.use((config) => {
   return config;
 });
 
-let retry = false;
+interface RequestConfig extends InternalAxiosRequestConfig {
+  _retry?: boolean;
+}
 
 client.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
-    const originalRequest = error.config as InternalAxiosRequestConfig;
+    const originalRequest = error.config as RequestConfig;
 
-    if (error.response?.status === 403 && !retry) {
-      retry = true;
+    // 요청 정보가 없거나, 이미 재시도한 경우 패스
+    if (!originalRequest || originalRequest._retry) {
+      return Promise.reject(error);
+    }
+
+    // 401 에러 -> 토큰 재발급 요청
+    // 무한 루프 방지
+    if (originalRequest.url?.includes("/auth/refresh")) {
+      return Promise.reject(error);
+    }
+
+    if (
+      (error.response?.status === 401 || error.response?.status === 403) &&
+      originalRequest &&
+      !originalRequest._retry
+    ) {
+      originalRequest._retry = true;
 
       try {
         const { accessToken } = await refreshAccessToken();
@@ -38,23 +60,19 @@ client.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${accessToken}`;
 
         return client(originalRequest);
-      } catch (err) {
+      } catch (refreshError) {
         useAuthStore.getState().setAccessToken(null);
-        throw err;
+        window.location.href = "/login";
+
+        return Promise.reject(refreshError);
       }
     }
-
-    throw error;
+    return Promise.reject(error);
   },
 );
 
 export const apiProxy = async <T>(config: AxiosRequestConfig): Promise<T> => {
-  try {
-    const response = await client.request<T>(config);
+  const response = await client.request<T>(config);
 
-    return response.data;
-  } catch (error: any) {
-    console.error("API Proxy Error: ", error.response?.data || error.message);
-    throw error;
-  }
+  return response.data;
 };

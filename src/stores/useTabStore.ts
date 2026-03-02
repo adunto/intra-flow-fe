@@ -2,12 +2,12 @@ import { create } from "zustand";
 
 export type TabEnum = "BOARD" | "MESSENGER";
 
-interface TabState {
+interface TabStore {
   tab: TabEnum;
   setTab: (tab: TabEnum) => void;
 }
 
-export const useTabStore = create<TabState>((set) => ({
+export const useTabStore = create<TabStore>((set) => ({
   tab: "BOARD",
   setTab: (tab) => set({ tab: tab }),
 }));

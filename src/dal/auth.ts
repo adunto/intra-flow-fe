@@ -1,6 +1,6 @@
-import { User } from "@/types/user";
-import { apiProxy } from "./proxy";
 import { useAuthStore } from "@/stores/useAuthStore";
+import type { User } from "@/types/user";
+import { apiProxy } from "./proxy";
 
 // 회원가입
 export const signup = async (
@@ -29,14 +29,30 @@ export const login = async (credentials: Pick<User, "email" | "password">) => {
 
 // 토큰 재발급
 export const refreshAccessToken = async () => {
-  const response = await apiProxy<{ accessToken: string }>({
+  const response = await apiProxy<{ success: boolean; accessToken: string }>({
     url: "/auth/refresh",
     method: "POST",
     withCredentials: true,
   });
 
+  if (!response.success) {
+    useAuthStore.getState().setAccessToken(null);
+    return response;
+  }
+
   const { accessToken } = response;
   useAuthStore.getState().setAccessToken(accessToken);
+
+  return response;
+};
+
+// 로그아웃
+export const logout = async () => {
+  const response = await apiProxy<{ success: boolean; message: string }>({
+    url: "/auth/logout",
+    method: "POST",
+    withCredentials: true,
+  });
 
   return response;
 };

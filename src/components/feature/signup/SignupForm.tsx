@@ -56,7 +56,7 @@ const SignupForm = () => {
   };
 
   return (
-    <Card className="min-w-100">
+    <Card className="min-w-100 min-h-120 flex justify-center">
       <TypographyH1>회원가입</TypographyH1>
       <form onSubmit={handleSubmit(onSignupSubmit)} className="m-4 space-y-4">
         {/* Username 필드 */}

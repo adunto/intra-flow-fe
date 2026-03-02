@@ -1,7 +1,7 @@
 "use client";
 
-import { useTabStore } from "@/stores/useTabStore";
 import { Activity } from "react";
+import { useTabStore } from "@/stores/useTabStore";
 import Board from "../feature/board/Board";
 import Messenger from "../feature/messenger/Messenger";
 
@@ -9,7 +9,7 @@ const MainContainer = () => {
   const { tab } = useTabStore();
 
   return (
-    <div className="w-full h-screen">
+    <div className="h-auto pt-16 flex justify-center">
       <Activity mode={tab === "BOARD" ? "visible" : "hidden"}>
         <Board />
       </Activity>
