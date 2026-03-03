@@ -6,7 +6,6 @@
 
 <h1 align="center">Intra Flow - Frontend</h1>
 
-
 <p align="center">
     <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js" />
     <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
@@ -24,6 +23,7 @@
 
 ## 📁 Project Structure
 
+```text
 ├── public/                 # 정적 assets (images, icons, etc.)
 ├── src/
 │   ├── app/                # Next.js App Router pages and layouts
@@ -50,3 +50,4 @@
 ├── package.json            # 프로젝트 패키지 및 스크립트
 ├── tsconfig.json           # TypeScript 설정
 └── vitest.config.ts        # Testing 설정 (Vitest)
+```
