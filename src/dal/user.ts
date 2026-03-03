@@ -6,7 +6,6 @@ export const getUserInfo = async (): Promise<User> => {
     url: "/users/profile",
     method: "GET",
     withCredentials: true,
-    timeout: 1000,
   });
 
   return response;

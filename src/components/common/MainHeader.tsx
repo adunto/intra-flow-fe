@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { useTransition } from "react";
 import { type TabEnum, useTabStore } from "@/stores/useTabStore";
 import Logo from "../feature/logo/Logo";
-import UserInfoButton from "../feature/user/UserInfoButton";
+import UserPopover from "../feature/user/UserPopover";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
 
 const RootHeader = () => {
@@ -45,7 +45,7 @@ const RootHeader = () => {
       )}
 
       {/* TODO: 사용자 간편 정보 (버튼) 누르면 모달 띄워주기 */}
-      <UserInfoButton />
+      <UserPopover />
     </header>
   );
 };

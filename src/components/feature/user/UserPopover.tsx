@@ -11,7 +11,7 @@ import { getUserInfo } from "@/dal/user";
 import { useAuthStore } from "@/stores/useAuthStore";
 import type { User } from "@/types/user";
 
-const UserInfoButton = () => {
+const UserPopover = () => {
   const { accessToken, setAccessToken, isAuthInitialized } = useAuthStore();
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
@@ -64,8 +64,6 @@ const UserInfoButton = () => {
     } else {
       setAccessToken(null);
     }
-
-    alert(message);
   };
 
   return (
@@ -80,7 +78,7 @@ const UserInfoButton = () => {
               fill
               className="object-cover"
               sizes="32px"
-              priority // LCP 최적화 (헤더에 있다면)
+              priority // LCP 최적화
             />
           ) : (
             <div className="flex h-full w-full items-center justify-center bg-gray-100">
@@ -101,4 +99,4 @@ const UserInfoButton = () => {
   );
 };
 
-export default UserInfoButton;
+export default UserPopover;

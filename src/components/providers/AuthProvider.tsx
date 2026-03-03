@@ -12,7 +12,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const { setAccessToken, setUser, setAuthInitialized } = useAuthStore();
 
   useEffect(() => {
-    if (isAppInitialized) {
+    const { accessToken, user } = useAuthStore.getState();
+
+    if (isAppInitialized || (accessToken && user)) {
       setAuthInitialized(true);
       return;
     }
@@ -25,7 +27,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         if (user) {
           setUser(user);
         }
-      } catch (error) {
+      } catch {
         setAccessToken(null);
         setUser(null);
       } finally {
