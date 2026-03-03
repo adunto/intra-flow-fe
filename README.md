@@ -24,4 +24,29 @@
 
 ## 📁 Project Structure
 
-Empty (추가 예정)
+├── public/                 # 정적 assets (images, icons, etc.)
+├── src/
+│   ├── app/                # Next.js App Router pages and layouts
+│   │   ├── login/          # 로그인 페이지
+│   │   ├── post/           # 게시물 관련 페이지
+│   │   ├── signup/         # 회원가입 페이지
+│   │   ├── user/           # 사용자 프로필 및 정보 페이지
+│   │   ├── globals.css     # 전역 스타일
+│   │   ├── layout.tsx      # 루트 레이아웃
+│   │   └── page.tsx        # 메인 랜딩 페이지
+│   ├── components/
+│   │   ├── common/         # 공통 컴포넌트
+│   │   ├── feature/        # 기능별 컴포넌트
+│   │   ├── providers/      # Context providers (Auth, Query)
+│   │   └── ui/             # UI 컴포넌트 (shadcn/ui)
+│   ├── dal/                # 데이터 접근 계층 (API fetching logic)
+│   ├── lib/                # 유틸리티 함수 및 공유 로직
+│   ├── schemas/            # 유효성 검사 스키마 (zod)
+│   ├── stores/             # 상태 관리 (zustand)
+│   └── types/              # TypeScript 타입 정의 (Domain models)
+├── biome.json              # Biome (Linter/Formatter) 설정
+├── components.json         # shadcn/ui 설정
+├── next.config.ts          # Next.js 설정
+├── package.json            # 프로젝트 패키지 및 스크립트
+├── tsconfig.json           # TypeScript 설정
+└── vitest.config.ts        # Testing 설정 (Vitest)
