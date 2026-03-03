@@ -1,9 +1,9 @@
 "use client";
 
+import { useEffect } from "react";
 import { refreshAccessToken } from "@/dal/auth";
 import { getUserInfo } from "@/dal/user";
 import { useAuthStore } from "@/stores/useAuthStore";
-import { useEffect } from "react";
 
 // 전체 앱 초기화 플래그
 let isAppInitialized = false;
@@ -20,8 +20,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const initAuth = async () => {
       isAppInitialized = true;
       try {
-        
-
         await refreshAccessToken();
         const user = await getUserInfo();
         if (user) {

@@ -4,7 +4,7 @@ import { MessageCircleIcon, PresentationIcon } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useTransition } from "react";
 import { type TabEnum, useTabStore } from "@/stores/useTabStore";
-import Logo from "../feature/header/Logo";
+import Logo from "../feature/logo/Logo";
 import UserInfoButton from "../feature/user/UserInfoButton";
 import { Tabs, TabsList, TabsTrigger } from "../ui/tabs";
 
