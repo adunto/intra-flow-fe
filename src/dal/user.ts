@@ -1,6 +1,6 @@
 import type { PostSummary } from "@/types/post";
 import type { User } from "@/types/user";
-import { apiProxy } from "./proxy";
+import { apiProxy } from "./apiProxy";
 
 export const getUserInfo = async (): Promise<User> => {
   const response = await apiProxy<User>({

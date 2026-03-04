@@ -6,7 +6,7 @@ import type {
   SearchType,
   UpdatePostDto,
 } from "@/types/post";
-import { apiProxy } from "./proxy";
+import { apiProxy } from "./apiProxy";
 
 export const fetchPosts = async (
   searchKeyword?: string,
@@ -62,7 +62,10 @@ export const createPost = async (createPostDto: CreatePostDto) => {
 };
 
 // 게시물 수정
-export const updatePost = async (postId: string, updatePostDto: UpdatePostDto) => {
+export const updatePost = async (
+  postId: string,
+  updatePostDto: UpdatePostDto,
+) => {
   const response = await apiProxy<Post>({
     url: `/posts/${postId}`,
     method: "PUT",
