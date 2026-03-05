@@ -12,29 +12,19 @@ import { useAuthStore } from "@/stores/useAuthStore";
 import type { User } from "@/types/user";
 
 const UserPopover = () => {
-  const { accessToken, setAccessToken, isAuthInitialized } = useAuthStore();
-  const [isPending, startTransition] = useTransition();
+  const { accessToken, setAccessToken } = useAuthStore();
+  const [startTransition] = useTransition();
   const router = useRouter();
 
-  const { data: user } = useQuery<User>({
-    queryKey: ["currentUser"],
+  const { data: user, isPending: isUserPending } = useQuery<User>({
+    queryKey: ["currentUser", accessToken],
     queryFn: getUserInfo,
-    enabled: !!accessToken, // 토큰이 있을 때만 쿼리 실행
-    staleTime: 1000 * 60 * 5,
-    gcTime: 1000 * 60 * 5,
+    staleTime: 1000 * 60 * 60,
+    gcTime: 1000 * 60 * 120,
     retry: false,
   });
 
-  if (!isAuthInitialized) {
-    return (
-      <Button variant="ghost" disabled className="w-32 justify-start gap-2">
-        <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
-        <span className="h-4 w-20 animate-pulse rounded bg-gray-200" />
-      </Button>
-    );
-  }
-
-  if (isPending) {
+  if (isUserPending) {
     return (
       <Button variant="ghost" disabled className="w-32 justify-start gap-2">
         <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
