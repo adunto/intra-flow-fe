@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import DefaultAlertDialog from "@/components/common/AlertDialog";
-import EditorComponent from "@/components/feature/board/create/EditorComponent";
+import EditorComponent from "@/components/feature/post/create/EditorComponent";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TypographyH1 } from "@/components/ui/typography";

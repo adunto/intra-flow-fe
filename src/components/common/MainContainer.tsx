@@ -2,7 +2,7 @@
 
 import { Activity } from "react";
 import { useTabStore } from "@/stores/useTabStore";
-import Board from "../feature/board/Board";
+import Board from "../feature/post/Board";
 import Messenger from "../feature/messenger/Messenger";
 
 const MainContainer = () => {
