@@ -44,7 +44,7 @@ const RootHeader = () => {
         </Tabs>
       )}
 
-      {/* TODO: 사용자 간편 정보 (버튼) 누르면 모달 띄워주기 */}
+      {/* 사용자 간편 정보 */}
       <UserPopover />
     </header>
   );

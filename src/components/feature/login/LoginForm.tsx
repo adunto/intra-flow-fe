@@ -21,9 +21,6 @@ type LoginFormType = z.infer<typeof loginSchema>;
 
 const LoginForm = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  // proxy.ts 에서 라우팅 설정해둔 callbackUrl
-  const callbackUrl = searchParams.get("callbackUrl") || "/";
 
   const {
     register,
@@ -47,7 +44,7 @@ const LoginForm = () => {
 
       // 로그인 성공
       startTransition(() => {
-        router.replace(callbackUrl);
+        router.replace("/");
         router.refresh();
       });
     } catch (err) {

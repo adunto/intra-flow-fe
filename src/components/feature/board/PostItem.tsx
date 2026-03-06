@@ -4,7 +4,13 @@ import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 import { Calendar, Eye, ThumbsUp, User } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { TypographyMuted, TypographySmall } from "@/components/ui/typography";
 import type { PostSummary } from "@/types/post";
 
@@ -28,30 +34,30 @@ const PostItem = ({ post }: PostItemProps) => {
   return (
     <Card
       onClick={handlePostItemClick}
-      className="w-full group cursor-pointer transition-all duration-300 hover:shadow-md hover:border-primary/50 relative overflow-hidden h-full flex flex-col"
+      className="w-full h-18 group cursor-pointer transition-all duration-300 hover:shadow-md hover:border-primary/20 hover:bg-primary/5 relative overflow-hidden flex flex-col"
     >
-      <div className="absolute inset-0 bg-linear-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
-
-      <CardHeader className="flex flex-row justify-between items-center">
-        <CardTitle className="text-xl group-hover:text-primary transition-colors duration-300">
+      <CardContent className="h-full flex flex-row justify-between items-center">
+        {/* 게시글 - 제목 */}
+        <div className="text-lg font-semibold group-hover:text-primary transition-colors duration-300">
           {post.title}
-        </CardTitle>
-        <TypographyMuted>
-          <span className="flex items-center gap-1.5">
-            <User size={14} className="text-primary/70" />
-            {post.user.username}
-          </span>
-        </TypographyMuted>
-      </CardHeader>
+        </div>
 
-      <CardFooter className="pt-2 border-t flex justify-between items-center text-muted-foreground bg-muted/30 group-hover:bg-transparent transition-colors duration-300">
-        <div className="flex items-center gap-4">
+        {/* 게시글 - 작성자, 조회수, 좋아요, 작성일 */}
+        <div className="h-full flex items-center gap-6">
+          <TypographyMuted>
+            <span className="flex items-center gap-1.5">
+              <User size={14} className="text-primary/70" />
+              {post.user.username}
+            </span>
+          </TypographyMuted>
+
           <div className="flex items-center gap-1.5" title="조회수">
             <Eye size={16} />
             <TypographySmall>
               {post.viewCount ? post.viewCount : "0"}
             </TypographySmall>
           </div>
+
           <div className="flex items-center gap-1.5" title="좋아요">
             <ThumbsUp
               size={16}
@@ -61,13 +67,13 @@ const PostItem = ({ post }: PostItemProps) => {
               {post.likeCount ? post.likeCount : "0"}
             </TypographySmall>
           </div>
-        </div>
 
-        <div className="flex items-center gap-1.5">
-          <Calendar size={14} />
-          <TypographySmall>{formattedDate}</TypographySmall>
+          <div className="flex items-center gap-1.5">
+            <Calendar size={14} />
+            <TypographySmall>{formattedDate}</TypographySmall>
+          </div>
         </div>
-      </CardFooter>
+      </CardContent>
     </Card>
   );
 };

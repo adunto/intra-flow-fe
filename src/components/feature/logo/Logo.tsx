@@ -1,10 +1,11 @@
+import Link from "next/link";
 import { TypographyH3 } from "@/components/ui/typography";
 
 const Logo = () => {
   return (
-    <div className="cursor-pointer">
+    <Link href="/" className="cursor-pointer">
       <TypographyH3>IntraFlow</TypographyH3>
-    </div>
+    </Link>
   );
 };
 

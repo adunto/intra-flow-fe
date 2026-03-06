@@ -1,6 +1,6 @@
 "use client";
 
-import { PencilLineIcon } from "lucide-react";
+import { PencilLineIcon, RotateCcw } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
@@ -31,7 +31,7 @@ const DEFAULT_CATEGORY = "전체";
 
 const BoardHeader = () => {
   const inputRef = useRef<HTMLInputElement>(null);
-  const { setSearchType, setSearchKeyword } = usePostStore();
+  const { searchKeyword, setSearchType, setSearchKeyword } = usePostStore();
 
   const router = useRouter();
 
@@ -66,7 +66,9 @@ const BoardHeader = () => {
           <Field orientation="horizontal">
             <Input
               ref={inputRef}
-              onKeyDown={(e) => e.key === "Enter"}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleSearch();
+              }}
               type="search"
               placeholder="검색어를 입력하세요."
               className="flex-1"
@@ -97,6 +99,28 @@ const BoardHeader = () => {
             </Combobox>
           </div>
         </div>
+
+        {/* 검색 결과 텍스트 & 초기화 버튼 */}
+        {searchKeyword.length > 0 ? (
+          <div className="mx-6 flex justify-between items-center gap-2">
+            <div className="flex gap-2">
+              <p className="font-bold">"{searchKeyword}"</p>
+              <p>에 대한 검색 결과입니다.</p>
+            </div>
+            <Button
+              variant="ghost"
+              onClick={() => {
+                if (inputRef.current) {
+                  inputRef.current.value = "";
+                }
+                setSearchKeyword("");
+              }}
+            >
+              <RotateCcw />
+              초기화
+            </Button>
+          </div>
+        ) : null}
       </Card>
     </div>
   );
