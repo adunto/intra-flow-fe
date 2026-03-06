@@ -6,9 +6,12 @@ import { fetchPostComments } from "@/dal/comment";
 import type { Comment } from "@/types/comment";
 
 const PostDetailCommentList = ({ postId }: { postId: string }) => {
+  // TODO: react-virtuoso 적용
   const { data: comments, isLoading } = useQuery<Comment[]>({
     queryKey: ["post-comments", postId],
     queryFn: () => fetchPostComments(postId),
+    staleTime: 1000 * 60 * 1,
+    gcTime: 1000 * 60 * 2,
   });
 
   if (isLoading) return <Loader2 className="animate-spin" />;

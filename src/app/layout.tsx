@@ -3,7 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
 import RootHeader from "@/components/common/MainHeader";
-import { AuthProvider } from "@/components/providers/AuthProvider";
 import QueryProvider from "@/components/providers/QueryProvider";
 
 const geistSans = Geist({
@@ -32,16 +31,14 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <QueryProvider>
-          <AuthProvider>
-            <Suspense
-              fallback={
-                <div className="h-16 w-full bg-white border-b shadow-sm" />
-              }
-            >
-              <RootHeader />
-            </Suspense>
-            {children}
-          </AuthProvider>
+          <Suspense
+            fallback={
+              <div className="h-16 w-full bg-white border-b shadow-sm" />
+            }
+          >
+            <RootHeader />
+          </Suspense>
+          {children}
         </QueryProvider>
       </body>
     </html>

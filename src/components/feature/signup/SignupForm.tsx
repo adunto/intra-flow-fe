@@ -1,21 +1,21 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader2, Lock, Mail, User } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useTransition } from "react";
+import { type SubmitHandler, useForm } from "react-hook-form";
+import type z from "zod";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
 } from "@/components/ui/input-group";
+import { TypographyH1 } from "@/components/ui/typography";
 import { signup } from "@/dal/auth";
 import { signupSchema } from "@/schemas/auth";
-import { Loader2, Lock, Mail, User } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { useTransition } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import z from "zod";
-import { Card } from "@/components/ui/card";
-import { TypographyH1 } from "@/components/ui/typography";
 
 type SignupFormType = z.infer<typeof signupSchema>;
 
@@ -40,7 +40,7 @@ const SignupForm = () => {
     data: SignupFormType,
   ) => {
     try {
-      const response = await signup(data);
+      await signup(data);
 
       // 회원가입 성공 => 로그인 페이지로 이동
       startTransition(() => {
@@ -57,7 +57,7 @@ const SignupForm = () => {
 
   return (
     <Card className="min-w-100 min-h-120 flex justify-center">
-      <TypographyH1>회원가입</TypographyH1>
+      <TypographyH1 className="text-center">회원가입</TypographyH1>
       <form onSubmit={handleSubmit(onSignupSubmit)} className="m-4 space-y-4">
         {/* Username 필드 */}
         <div className="flex flex-col gap-1">

@@ -1,5 +1,5 @@
 import type { Comment } from "@/types/comment";
-import { apiProxy } from "./proxy";
+import { apiProxy } from "./apiProxy";
 
 // 게시물 댓글 조회
 export const fetchPostComments = async (postId: string): Promise<Comment[]> => {
@@ -29,10 +29,7 @@ export const createComment = async (
 };
 
 // 댓글 수정
-export const updateComment = async (
-  commentId: string,
-  comment: string,
-) => {
+export const updateComment = async (commentId: string, comment: string) => {
   const response = await apiProxy({
     url: `/comments/${commentId}`,
     method: "PUT",
