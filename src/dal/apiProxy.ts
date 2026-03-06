@@ -62,7 +62,6 @@ client.interceptors.response.use(
         return client(originalRequest);
       } catch (refreshError) {
         useAuthStore.getState().setAccessToken(null);
-        window.location.href = "/login";
 
         return Promise.reject(refreshError);
       }
