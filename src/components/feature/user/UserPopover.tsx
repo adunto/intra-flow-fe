@@ -12,27 +12,17 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { logout } from "@/dal/auth";
-import { getUserInfo } from "@/dal/user";
 import { useAuthStore } from "@/stores/useAuthStore";
-import type { User } from "@/types/user";
 
 const UserPopover = () => {
-  const { accessToken, setAccessToken } = useAuthStore();
+  const { user, accessToken, setAccessToken, isPending } = useAuthStore();
   const [_, startTransition] = useTransition();
   const router = useRouter();
 
   // 팝업 열림 상태
   const [open, setOpen] = useState(false);
 
-  const { data: user, isPending: isUserPending } = useQuery<User>({
-    queryKey: ["currentUser"],
-    queryFn: getUserInfo,
-    retry: 1,
-    staleTime: 1000 * 60 * 60,
-    gcTime: 1000 * 60 * 120,
-  });
-
-  if (isUserPending) {
+  if (isPending) {
     return (
       <Button variant="ghost" disabled className="w-32 justify-start gap-2">
         <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />

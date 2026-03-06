@@ -1,4 +1,3 @@
-import { cache } from "react";
 import type {
   CreatePostDto,
   Post,
@@ -41,14 +40,14 @@ export const fetchPosts = async (
 };
 
 // 게시물 상세 조회
-export const fetchPostDetail = cache(async (postId: string) => {
+export const fetchPostDetail = async (postId: string) => {
   const response = await apiProxy<Post>({
     url: `/posts/${postId}`,
     method: "GET",
   });
 
   return response;
-});
+};
 
 // 게시물 작성
 export const createPost = async (createPostDto: CreatePostDto) => {

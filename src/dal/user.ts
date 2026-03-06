@@ -1,4 +1,3 @@
-import { useAuthStore } from "@/stores/useAuthStore";
 import type { PostSummary } from "@/types/post";
 import type { User } from "@/types/user";
 import { apiProxy } from "./apiProxy";
@@ -9,8 +8,6 @@ export const getUserInfo = async (): Promise<User> => {
     method: "GET",
     withCredentials: true,
   });
-
-  useAuthStore.getState().setUser(response);
 
   return response;
 };
