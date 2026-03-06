@@ -1,25 +1,24 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { TypographyH2 } from "@/components/ui/typography";
 import { getUserPosts } from "@/dal/user";
-import { useAuthStore } from "@/stores/useAuthStore";
+import type { PostSummary } from "@/types/post";
 
 const UserPosts = () => {
-  const { user } = useAuthStore();
+  const [posts, setPosts] = useState<PostSummary[]>([]);
 
-  // 유저 아이디로 게시글 목록 가져오기
-  const { data: posts } = useQuery({
-    queryKey: ["user-posts", user?.id],
-    queryFn: () => getUserPosts(),
-    enabled: !!user?.id,
-    staleTime: 1000 * 60 * 60,
-    gcTime: 1000 * 60 * 60 * 24,
-  });
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const res = await getUserPosts();
+      setPosts(res);
+    };
+    fetchPosts();
+  }, []);
 
   return (
-    <div className="w-full max-w-5xl mt-4 flex gap-4 flex-col">
+    <div className="w-full max-w-5xl max-h-96 overflow-auto mt-4 flex gap-4 flex-col">
       <TypographyH2>작성글</TypographyH2>
       {posts?.map((post) => (
         <Link
