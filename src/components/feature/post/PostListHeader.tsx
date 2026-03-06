@@ -29,7 +29,7 @@ export const SearchCategories = new Map<string, Array<SearchType>>([
 // 카테고리 기본값
 const DEFAULT_CATEGORY = "전체";
 
-const BoardHeader = () => {
+const PostListHeader = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { searchKeyword, setSearchType, setSearchKeyword } = usePostStore();
 
@@ -126,4 +126,4 @@ const BoardHeader = () => {
   );
 };
 
-export default BoardHeader;
+export default PostListHeader;
