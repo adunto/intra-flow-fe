@@ -5,7 +5,7 @@ export interface Comment {
   content: string;
   likeCount: number;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date;
   deletedAt?: Date;
   user: UserSummary;
   parent?: Comment;
