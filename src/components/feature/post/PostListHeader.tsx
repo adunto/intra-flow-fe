@@ -29,7 +29,7 @@ export const SearchCategories = new Map<string, Array<SearchType>>([
 // 카테고리 기본값
 const DEFAULT_CATEGORY = "전체";
 
-const BoardHeader = () => {
+const PostListHeader = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const { searchKeyword, setSearchType, setSearchKeyword } = usePostStore();
 
@@ -54,7 +54,7 @@ const BoardHeader = () => {
   return (
     <div className="w-full">
       <div className="flex justify-between px-4">
-        <TypographyH1>게시글</TypographyH1>
+        <TypographyH1>IntraBoard</TypographyH1>
         <Button variant="default" size="lg" onClick={handleCreatePostClick}>
           <PencilLineIcon />글 쓰기
         </Button>
@@ -126,4 +126,4 @@ const BoardHeader = () => {
   );
 };
 
-export default BoardHeader;
+export default PostListHeader;

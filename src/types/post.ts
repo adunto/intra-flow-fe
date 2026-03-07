@@ -14,7 +14,7 @@ export interface Post {
   viewCount: number;
   likeCount: number;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date;
   deletedAt?: Date;
   user: UserSummary;
   userId: number;

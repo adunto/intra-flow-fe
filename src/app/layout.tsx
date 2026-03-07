@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
+import { Toaster } from "sonner";
 import RootHeader from "@/components/common/MainHeader";
 import QueryProvider from "@/components/providers/QueryProvider";
 
@@ -39,6 +40,7 @@ export default function RootLayout({
             <RootHeader />
           </Suspense>
           {children}
+          <Toaster position="top-center" richColors />
         </QueryProvider>
       </body>
     </html>

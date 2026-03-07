@@ -1,8 +1,11 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import DefaultAlertDialog from "@/components/common/AlertDialog";
-import EditorComponent from "@/components/feature/board/create/EditorComponent";
+import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { useRef, useState, useTransition } from "react";
+import { toast } from "sonner";
+import DefaultAlertDialog from "@/components/common/alert/AlertDialog";
+import EditorComponent from "@/components/feature/post/create/EditorComponent";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { TypographyH1 } from "@/components/ui/typography";
@@ -13,34 +16,34 @@ const CreatePostPage = () => {
   const [content, setContent] = useState<Array<any> | null>(null);
   const [isContentEmpty, setIsContentEmpty] = useState<boolean>(true);
 
+  const router = useRouter();
+
+  // 제목 Input Ref
+  const titleInputRef = useRef<HTMLInputElement | null>(null);
+
+  // queryClient 인스턴스
+  const queryClient = useQueryClient();
+
   const [isPending, startTransition] = useTransition();
 
-  // 알림창 상태
+  // 알림창 Open 상태
   const [open, setOpen] = useState<boolean>(false);
 
   const handleSubmit = async () => {
-    if (title.length === 0) {
-      alert("제목을 입력해주세요.");
-      return;
-    }
-
-    if (isContentEmpty) {
-      alert("내용을 입력해주세요.");
-      return;
-    }
-
     startTransition(async () => {
       const post = await createPost({ title, content });
       console.log(post);
       // 게시물 등록 성공
       if (post) {
-        window.location.replace("/");
+        router.back();
+        queryClient.invalidateQueries({ queryKey: ["posts", "list"] });
+        queryClient.invalidateQueries({ queryKey: ["user", "posts"] });
 
         setTitle("");
         setContent(null);
         setIsContentEmpty(true);
       } else {
-        alert("게시물 등록이 실패되었습니다.");
+        toast.error("게시물 등록에 실패했습니다.");
       }
     });
   };
@@ -80,6 +83,7 @@ const CreatePostPage = () => {
         {/* 카테고리 콤보박스 */}
 
         <Input
+          ref={titleInputRef}
           placeholder="제목을 입력해주세요."
           className="w-full"
           onChange={(e) => setTitle(e.target.value)}
@@ -95,7 +99,23 @@ const CreatePostPage = () => {
 
       {/* 게시물 저장 버튼 */}
       <div className="min-w-5xl md:mx-20 mx-5 flex flex-col">
-        <Button className="self-end" onClick={() => setOpen(true)}>
+        <Button
+          className="self-end"
+          onClick={() => {
+            if (title.length === 0) {
+              toast.error("제목을 입력해주세요.");
+              titleInputRef.current?.focus();
+              return;
+            }
+
+            if (isContentEmpty) {
+              toast.error("내용을 입력해주세요.");
+              return;
+            }
+
+            setOpen(true);
+          }}
+        >
           게시물 등록
         </Button>
       </div>

@@ -53,6 +53,8 @@ client.interceptors.response.use(
       originalRequest._retry = true;
 
       try {
+        useAuthStore.getState().setIsPending(true);
+
         const { accessToken } = await refreshAccessToken();
 
         useAuthStore.getState().setAccessToken(accessToken);
@@ -64,6 +66,8 @@ client.interceptors.response.use(
         useAuthStore.getState().setAccessToken(null);
 
         return Promise.reject(refreshError);
+      } finally {
+        useAuthStore.getState().setIsPending(false);
       }
     }
     return Promise.reject(error);

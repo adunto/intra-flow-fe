@@ -1,6 +1,6 @@
 import { Suspense } from "react";
-import PostDetail from "@/components/feature/board/detail/PostDetail";
-import PostDetailSkeleton from "@/components/feature/board/detail/PostDetailSkeleton";
+import PostDetail from "@/components/feature/post/detail/PostDetail";
+import PostDetailSkeleton from "@/components/feature/post/detail/PostDetailSkeleton";
 
 const PostDetailPage = async ({
   params,

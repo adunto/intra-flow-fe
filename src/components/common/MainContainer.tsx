@@ -2,8 +2,8 @@
 
 import { Activity } from "react";
 import { useTabStore } from "@/stores/useTabStore";
-import Board from "../feature/board/Board";
 import Messenger from "../feature/messenger/Messenger";
+import PostListContainer from "../feature/post/PostListContainer";
 
 const MainContainer = () => {
   const { tab } = useTabStore();
@@ -11,7 +11,7 @@ const MainContainer = () => {
   return (
     <div className="h-auto pt-16 flex justify-center">
       <Activity mode={tab === "BOARD" ? "visible" : "hidden"}>
-        <Board />
+        <PostListContainer />
       </Activity>
 
       <Activity mode={tab === "MESSENGER" ? "visible" : "hidden"}>
