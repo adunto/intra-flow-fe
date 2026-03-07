@@ -36,7 +36,7 @@ const PostDetailCommentInput = ({ postId }: { postId: string }) => {
   };
 
   return (
-    <div className="w-full flex flex-row gap-2">
+    <div className="w-full flex flex-row gap-2 mb-20">
       <Input
         value={comment}
         onChange={(e) => setComment(e.target.value)}

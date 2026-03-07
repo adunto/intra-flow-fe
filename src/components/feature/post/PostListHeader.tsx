@@ -54,7 +54,7 @@ const PostListHeader = () => {
   return (
     <div className="w-full">
       <div className="flex justify-between px-4">
-        <TypographyH1>게시글</TypographyH1>
+        <TypographyH1>IntraBoard</TypographyH1>
         <Button variant="default" size="lg" onClick={handleCreatePostClick}>
           <PencilLineIcon />글 쓰기
         </Button>

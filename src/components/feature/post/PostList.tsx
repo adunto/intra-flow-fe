@@ -15,7 +15,7 @@ const PostList = () => {
     isError,
     error,
   } = useQuery({
-    queryKey: ["posts", searchKeyword, currentPagination],
+    queryKey: ["posts", "list"],
     queryFn: async () => {
       const response = await fetchPosts(
         searchKeyword,

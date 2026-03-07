@@ -49,7 +49,7 @@ const EditorComponent = ({
     <div className="min-w-5xl md:mx-20 mx-5 border border-gray-200 rounded-md">
       {/* 툴바 영역: 텍스트 스타일을 변경하는 버튼들 모음 */}
       <div className="flex gap-2 h-full items-center p-2">
-        {/* 굵게 버튼: 클릭 시 toggleBold() 함수를 실행해 텍스트를 굵게 만듭니다. */}
+        {/* 굵게 버튼 */}
         <Button
           onClick={() => editor.chain().focus().toggleBold().run()}
           variant={editor.isActive("bold") ? "default" : "secondary"}
@@ -88,7 +88,7 @@ const EditorComponent = ({
 
       <Separator />
 
-      {/* 실제 사용자가 텍스트를 입력하고 확인하는 본문 영역입니다. */}
+      {/* 에디터 영역 */}
       <EditorContent
         editor={editor}
         className="min-h-[200px] max-h-[600px] mt-4 p-2 overflow-y-auto"
