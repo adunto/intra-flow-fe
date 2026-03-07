@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Virtuoso } from "react-virtuoso";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -21,9 +22,11 @@ const UserPosts = () => {
     staleTime: 1000 * 60 * 5,
   });
 
+  const router = useRouter();
+
   return (
     <div className="w-full max-w-5xl max-h-96 overflow-auto mt-4 flex gap-4 flex-col">
-      <TypographyH2>작성글</TypographyH2>
+      <TypographyH2>작성한 게시글</TypographyH2>
 
       {/* 로딩 처리 */}
       {isLoading && (
@@ -39,7 +42,7 @@ const UserPosts = () => {
 
       {/* 에러 처리 */}
       {isError && (
-        <div className="py-10 text-center text-red-500">
+        <div className="flex flex-col gap-2 py-10 text-center text-red-500">
           작성한 글을 불러오는 데 실패했습니다.
           <Button onClick={() => refetch()}>다시 시도</Button>
         </div>
@@ -47,8 +50,15 @@ const UserPosts = () => {
 
       {/* 데이터 없음 처리 */}
       {!isLoading && !isError && posts?.length === 0 && (
-        <div className="rounded-md border border-dashed py-10 text-center text-muted-foreground">
+        <div className="flex flex-col justify-center gap-2 rounded-md border border-dashed py-10 text-center text-muted-foreground">
           작성한 게시글이 없습니다.
+          <Button
+            className="w-fit mx-auto bg-blue-400 hover:bg-blue-500 transition-colors duration-300"
+            size="sm"
+            onClick={() => router.push("/post/create")}
+          >
+            게시글 작성하러 가기
+          </Button>
         </div>
       )}
 

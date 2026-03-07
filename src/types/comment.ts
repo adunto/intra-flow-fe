@@ -1,5 +1,3 @@
-import type { UserSummary } from "./user";
-
 export interface Comment {
   id: string;
   content: string;
@@ -7,7 +5,13 @@ export interface Comment {
   createdAt: Date;
   updatedAt?: Date;
   deletedAt?: Date;
-  user: UserSummary;
+  userId: number;
+  postId: string;
   parent?: Comment;
   children?: Comment[];
 }
+
+export type CommentSummary = Pick<
+  Comment,
+  "id" | "content" | "createdAt" | "updatedAt" | "postId"
+>;
