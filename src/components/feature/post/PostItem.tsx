@@ -1,17 +1,10 @@
 "use client";
 
-import { format } from "date-fns";
-import { ko } from "date-fns/locale";
 import { Calendar, Eye, ThumbsUp, User } from "lucide-react";
 import { useRouter } from "next/navigation";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { TypographyMuted, TypographySmall } from "@/components/ui/typography";
+import { formatDate } from "@/lib/utils";
 import type { PostSummary } from "@/types/post";
 
 interface PostItemProps {
@@ -20,9 +13,7 @@ interface PostItemProps {
 
 const PostItem = ({ post }: PostItemProps) => {
   // 날짜 변환
-  const formattedDate = format(new Date(post.createdAt), "yyyy.MM.dd", {
-    locale: ko,
-  });
+  const formattedDate = formatDate(new Date(post.createdAt));
 
   const router = useRouter();
 
