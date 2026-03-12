@@ -2,9 +2,10 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, Lock, Mail } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import type z from "zod";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -25,6 +26,8 @@ const LoginForm = () => {
   const {
     register,
     handleSubmit,
+    resetField,
+    setFocus,
     formState: { errors },
   } = useForm<LoginFormType>({
     resolver: zodResolver(loginSchema), // zod 스키마 검증
@@ -44,15 +47,21 @@ const LoginForm = () => {
 
       // 로그인 성공
       startTransition(() => {
+        toast.success("로그인 성공", {
+          position: "bottom-right",
+        });
+
         router.replace("/");
         router.refresh();
       });
     } catch (err) {
       // 실패
-      console.error(err);
-      // TODO: 사용자에게 에러 알림
-
-      alert("로그인 실패");
+      toast.error("이메일과 비밀번호를 확인해주세요.", {
+        position: "bottom-right",
+      });
+      // 비밀번호란 초기화
+      resetField("password");
+      setFocus("password");
     }
   };
 

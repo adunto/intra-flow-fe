@@ -5,6 +5,7 @@ import { Loader2, Lock, Mail, User } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 import type z from "zod";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -44,6 +45,8 @@ const SignupForm = () => {
 
       // 회원가입 성공 => 로그인 페이지로 이동
       startTransition(() => {
+        toast.success("회원가입이 완료되었습니다.");
+
         router.replace("/login");
         router.refresh();
       });
